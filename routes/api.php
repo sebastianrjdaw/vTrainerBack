@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\LoginApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\Auth\RegisteredUserApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,8 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/', function () {
-    return response()->json(['message' => 'hola']);
+    return response()->json(['message' => 'Servidor Funcionando']);
 });
 
-Route::post('/register', [RegisteredUserController::class, 'store'])
-    ->middleware('guest');
+Route::post('/register', [RegisteredUserApiController::class, 'store']);
+Route::post('/login', [LoginApiController::class, 'login']);
