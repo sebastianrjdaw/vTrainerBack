@@ -11,16 +11,18 @@ class CreatePerfilsTable extends Migration
      *
      * @return void
      */
-    public function up(){
-    
+    public function up()
+    {
+
         Schema::create('perfils', function (Blueprint $table) {
-            $table->bigInteger('user_id')->unsigned()->unique;
+            $table->bigInteger('user_id')->unsigned()->unique();
+            $table->boolean('esPremium')->default(false);
             $table->string('tipoUsuario');
             $table->string('nombreEquipo');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            });
-        }
+        });
+    }
 
     /**
      * Reverse the migrations.
