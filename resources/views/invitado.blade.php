@@ -58,10 +58,8 @@
                 <h3 class="m-0 font-weight-bold text-primary">Bienvenido a Voley-Trainer </h3>
               </div>
               <div class="card-body">
-                <h6>Bienvenido al Gestor de Entrenamientos, que deseas hacer?</h6>
+                <h6>Bienvenido al Panel de Administracion del Gestor de Entrenamientos, que deseas hacer?</h6>
                 <a href="{{route('login')}}" class="btn btn-primary">Iniciar Sesion</a>
-                <a href="{{route('register')}}" class="btn btn-success">Registrase</a>
-
               </div>
             </div>
           </div>
@@ -74,10 +72,10 @@
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    
 
-    
-    
+
+
+
 
     <!-- Bootstrap core JavaScript-->
     <!-- <script src="/vendor/jquery/jquery.min.js"></script> -->

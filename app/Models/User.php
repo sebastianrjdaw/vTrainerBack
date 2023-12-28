@@ -15,6 +15,12 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
+    public function isAdmin()
+    {
+        return $this->rol == 'admin';
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -46,10 +52,12 @@ class User extends Authenticatable
     ];
 
     // funcion para indicar que el usuario posee un Perfil
-    public function perfil() {
+    public function perfil()
+    {
         return $this->hasOne(Perfil::class);
-        }
-    public function equipo(){
+    }
+    public function equipo()
+    {
         return $this->hasOne(Equipo::class);
-    }    
+    }
 }

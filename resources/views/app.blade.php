@@ -45,60 +45,6 @@
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Principal</span></a>
       </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider" />
-
-      <!-- Heading -->
-      <div class="sidebar-heading">Interface</div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseb" aria-expanded="true" aria-controls="collapseb">
-        <i class="fas fa-people-group"></i>
-          <span>{{ __('mensaje.equipo') }}</span>
-        </a>
-        <div id="collapseb" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="/mi-equipo">Info {{ __('mensaje.equipo') }}</a>
-            <a class="collapse-item" href="/verjugadores">{{ __('mensaje.jugadores') }}</a>
-            <a class="collapse-item" href="/jornada">{{ __('mensaje.estadisiticas') }}</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-dumbbell"></i>
-          <span>{{ __('mensaje.entrenamientos') }}</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="/rutina">{{ __('mensaje.rutina') }}</a>
-            <a class="collapse-item" href="{{ route('entrenamientos.index') }}">{{ __('mensaje.registroE') }}</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-circle-plus"></i>
-          <span>{{ __('mensaje.añadir') }}</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{route('entrenamientos.create')}}">{{ __('mensaje.entrenamientos') }}</a>
-            <a class="collapse-item" href="/nuevajornada">{{ __('mensaje.jornada') }}</a>
-            <a class="collapse-item" href="{{route ('jugadorEstadistica.create')}}">{{ __('mensaje.estadJugador') }}</a>
-
-          </div>
-        </div>
-      </li>
-
-
-
       <!-- Divider -->
       <hr class="sidebar-divider" />
       @if ((null!==Auth::user())&&(Auth::user()->rol=='admin'))
@@ -134,7 +80,7 @@
       <div id="content">
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-          
+
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
@@ -146,7 +92,7 @@
           <ul class="navbar-nav ml-auto">
 
           <li class="nav-item ml-4 dropdown no-arrow">
-            
+
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ __('idioma.language') }} {{ App::getLocale() }} </span>
               <i class="fa-solid fa-language"></i>
