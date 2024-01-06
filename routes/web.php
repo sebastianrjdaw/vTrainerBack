@@ -11,7 +11,7 @@ use App\Http\Controllers\jugadorController;
 use App\Http\Controllers\jornadaController;
 use App\Http\Controllers\jugadorEstadisticaController;
 use App\Http\Controllers\estadisticasController;
-
+use App\Http\Controllers\userController;
 
 
 
@@ -27,10 +27,9 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', function () {
-        //Verificacion si el usuario tiene perfil
-
         return view('admin.adminIndex');
     });
+    Route::resource('users', userController::class);
 });
 
 
