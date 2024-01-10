@@ -20,7 +20,7 @@
 
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="users" class="table table-bordered table-striped" id="dataTable" width="100%"
+                    <table id="datatable" class="table table-bordered table-striped"  width="100%"
                         cellspacing="0">
                         <thead>
                             <tr>

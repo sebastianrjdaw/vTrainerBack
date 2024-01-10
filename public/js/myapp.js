@@ -2,7 +2,9 @@
 // Script de control propio
 
 
-new DataTable('#users');
+
+new DataTable('#datatable');
+
 
 function controlAlertas(){
     setTimeout(function() {

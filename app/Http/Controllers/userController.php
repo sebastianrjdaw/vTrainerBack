@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use App\Models\UserLog;
 class UserController extends Controller
 {
 
@@ -37,6 +37,11 @@ class UserController extends Controller
             'password' => Hash::make($validatedData['password']),
         ]);
 
+        UserLog::create([
+            'user_id' => '0',
+            'action' => 'Se ha registrado al usuario ('.$user->name.' id: '.$user->id.' ) desde el panel de administracion',
+            'importance_level' => 1
+        ]);
 
         return redirect()->route('users.index')->with('success', 'Usuario creado exitosamente.');
     }
@@ -63,6 +68,12 @@ class UserController extends Controller
         }
         $user->save();
 
+        UserLog::create([
+            'user_id' => '0',
+            'action' => 'Se ha editado el usuario ('.$user->name.' | id: '.$user->id.' ) desde el panel de administracion',
+            'importance_level' => 2
+        ]);
+
         return redirect()->route('users.index')->with('success', 'Usuario actualizado exitosamente.');
     }
 
@@ -72,6 +83,11 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+        UserLog::create([
+            'user_id' => '0',
+            'action' => 'Se ha eliminado el usuario ('.$user->name.' | id: '.$user->id.' ) desde el panel de administracion',
+            'importance_level' => 1
+        ]);
         return redirect()->route('users.index')->with('success', 'Usuario eliminado exitosamente.');
     }
 }

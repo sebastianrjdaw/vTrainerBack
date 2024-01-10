@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Http\Controllers\userLogController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\etiquetaController;
@@ -30,6 +30,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return view('admin.adminIndex');
     });
     Route::resource('users', userController::class);
+    Route::get('/user-logs',[userLogController::class, 'index']);
 });
 
 

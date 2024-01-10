@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJornadasTable extends Migration
+class CreateUserLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,12 @@ class CreateJornadasTable extends Migration
      */
     public function up()
     {
-        Schema::create('jornadas', function (Blueprint $table) {
+        Schema::create('user_logs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('action');
+            $table->tinyInteger('importance_level'); 
             $table->timestamps();
-            $table->unsignedBigInteger('equipo_id');
-            $table->integer('numero')->unique();
-            $table->timestamp('fecha')->nullable();
-            $table->string('rival');
-            $table->integer('resultadoE');
-            $table->integer('resultadoR');
-
         });
     }
 
@@ -33,6 +29,6 @@ class CreateJornadasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jornadas');
+        Schema::dropIfExists('user_logs');
     }
 }

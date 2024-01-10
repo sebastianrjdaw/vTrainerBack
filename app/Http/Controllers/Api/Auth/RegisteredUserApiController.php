@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
-
+use App\Models\UserLog;
 class RegisteredUserApiController extends Controller
 {
     /**
@@ -34,6 +34,12 @@ class RegisteredUserApiController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+            ]);
+            
+            UserLog::create([
+                'user_id' => $user->id,
+                'action' => 'Se ha registrado el usuario ('.$user->name.' | id: '.$user->id.' ) desde la web',
+                'importance_level' => 1
             ]);
 
             event(new Registered($user));

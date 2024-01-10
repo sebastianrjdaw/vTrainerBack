@@ -83,7 +83,7 @@
                 </a>
                 <div id="collapseLogs" class="collapse" aria-labelledby="headingLogs" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/crearEtiquetas">Logs Usuarios</a>
+                        <a class="collapse-item" href="/user-logs">Logs Usuarios</a>
                         <a class="collapse-item" href="/todosPerfiles">BD logs</a>
                     </div>
                 </div>

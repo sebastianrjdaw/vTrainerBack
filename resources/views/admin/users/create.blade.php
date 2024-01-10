@@ -50,7 +50,7 @@
                                 <input class="form-control" type="password" placeholder="Contraseña"
                                     name="password_confirmation" id="password" required>
                             </div>
-                        </div>return view('admin.users.edit', compact('user' => 'usuario'));
+                        </div>
                         <div class="form-row">
                             <div class="col">
                                 <div class="form-group">
