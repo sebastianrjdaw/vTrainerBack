@@ -16,12 +16,13 @@ class CreateEquiposTable extends Migration
         Schema::create('equipos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->unsignedBigInteger('user_id')->nullable(); // Hacerlo nullable para que un entrenador pueda elegir gestionar uno
             $table->string('competicion');
             $table->string('nombre');
             $table->string('ubicacion');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
+        
     }
 
     /**
