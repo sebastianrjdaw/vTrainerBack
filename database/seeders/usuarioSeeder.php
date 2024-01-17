@@ -13,16 +13,15 @@ class usuarioSeeder extends Seeder
      *
      * @return void
      */
-    
-        public function run()
+
+    public function run()
     {
         DB::table('users')->insert([
-        
-                'name' => 'usuario',
-                'email' => 'usuario@usuario.com',
-                'rol' => 'usuario',
-                'password' => Hash::make('usuario')    
+
+            'name' => 'usuario',
+            'email' => 'usuario@usuario.com',
+            'rol' => 'usuario',
+            'password' => Hash::make('12345678')
         ]);
     }
-    }
-
+}

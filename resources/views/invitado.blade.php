@@ -29,12 +29,12 @@
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <div class="sidebar-brand d-flex align-items-center justify-content-center" >
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-volleyball-ball"></i>
         </div>
         <div class="sidebar-brand-text mx-3">Voley Trainer</div>
-      </a>
+    </div>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0" />
@@ -58,10 +58,8 @@
                 <h3 class="m-0 font-weight-bold text-primary">Bienvenido a Voley-Trainer </h3>
               </div>
               <div class="card-body">
-                <h6>Bienvenido al Gestor de Entrenamientos, que deseas hacer?</h6>
+                <h6>Bienvenido al Panel de Administracion del Gestor de Entrenamientos, que deseas hacer?</h6>
                 <a href="{{route('login')}}" class="btn btn-primary">Iniciar Sesion</a>
-                <a href="{{route('register')}}" class="btn btn-success">Registrase</a>
-
               </div>
             </div>
           </div>
@@ -74,10 +72,10 @@
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    
 
-    
-    
+
+
+
 
     <!-- Bootstrap core JavaScript-->
     <!-- <script src="/vendor/jquery/jquery.min.js"></script> -->
