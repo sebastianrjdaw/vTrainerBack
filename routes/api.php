@@ -4,7 +4,9 @@ use App\Http\Controllers\Api\Auth\LoginApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\RegisteredUserApiController;
-use App\Http\Controllers\perfilController;
+use App\Http\Controllers\Api\perfilController;
+use App\Http\Controllers\Api\equipoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +31,30 @@ Route::post('/register', [RegisteredUserApiController::class, 'store']);
 Route::post('/login', [LoginApiController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
+
     //Control del perfil
     Route::post('set-perfil', [perfilController::class, 'store']);
     Route::post('update-perfil', [perfilController::class, 'update']);
     Route::get('get-perfil', [perfilController::class, 'get']);
 
-    //
+    //Control de usuarios Jugadores
+    Route::middleware('jugador.perfil')->group(function(){
+        Route::get('jugador-prueba', function (){
+            return response()->json(['message'=>'eres un jugador']);
+        });
+    });
+
+    //Control de usuarios Entrenadores
+    Route::middleware('entrenador.perfil')->group(function(){
+        Route::get('entrenador-prueba', function (){
+            return response()->json(['message'=>'eres un entrenador']);
+        });
+
+        //Control de Equipos
+        Route::get('equipos', [equipoController::class , 'index']);
+        Route::get('mi-equipo',[equipoController::class, 'show']);
+        Route::post('equipo-entrenador', [equipoController::class , 'setUserEquipo']);
+        
+    });
+
 });
