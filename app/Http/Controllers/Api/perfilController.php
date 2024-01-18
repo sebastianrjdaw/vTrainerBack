@@ -1,41 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Perfil;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Symfony\Component\Finder\Finder;
-
 class perfilController extends Controller
 {
-
-
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-
-        $usuarios = User::all();
-        return view('perfil.index', ['usuarios' => $usuarios]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('perfil.create');
-    }
-
-    /**
+     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -45,7 +19,6 @@ class perfilController extends Controller
     {
         $request->validate([
             'tipoUsuario' => 'required|string|in:entrenador,jugador',
-            'nombreEquipo' => 'required|string|min:3|max:40'
         ]);
 
         $userId = Auth::id();
@@ -57,7 +30,6 @@ class perfilController extends Controller
 
         $perfil = new Perfil();
         $perfil->tipoUsuario = $request->tipoUsuario;
-        $perfil->nombreEquipo = $request->nombreEquipo;
         $perfil->user_id = $userId;
 
         try {
@@ -69,35 +41,10 @@ class perfilController extends Controller
         }
     }
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-    }
-
     public function get()
     {
         $usuario = User::find(Auth::id());
-        $perfil = $usuario->perfil;
         return response()->json(['User' => $usuario]);
-    }
-
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -111,7 +58,6 @@ class perfilController extends Controller
     {
         $request->validate([
             'tipoUsuario' => 'required|in:entrenador,jugador|string',
-            'nombreEquipo' => 'required|string|min:3|max:40',
         ]);
 
         $user = Auth::user();
@@ -124,7 +70,6 @@ class perfilController extends Controller
 
         $perfil->tipoUsuario = $request->tipoUsuario;
         $perfil->nombreEquipo = $request->nombreEquipo;
-
         $perfil->save();
 
         return response()->json(['message' => 'Perfil actualizado correctamente'], 200);

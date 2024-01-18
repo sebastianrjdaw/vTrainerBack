@@ -21,7 +21,8 @@ class CreateJugadorsTable extends Migration
             $table->integer('dorsal');
             $table->float('altura');
             $table->string('posicion');
-            $table->unsignedBigInteger('equipo_id');
+            $table->unsignedBigInteger('equipo_id')->nullable();
+            $table->foreign('equipo_id')->references('id')->on('equipos');
         });
     }
 
