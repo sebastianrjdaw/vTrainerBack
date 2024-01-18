@@ -71,7 +71,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         {{-- <a class="collapse-item" href="/todosPerfiles">Usuarios</a> --}}
                         <a class="collapse-item" href="{{ route('users.index') }}">Usuarios</a>
-                        <a class="collapse-item" href="#">Perfiles</a>
+                        <a class="collapse-item" href="/mensajes">Mensajes</a>
                     </div>
                 </div>
             </li>
@@ -112,6 +112,20 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link " href="/mensajes" id="messagesDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <!-- Contador de Mensajes No Leídos -->
+                                @if (isset($cantidadMensajesNoLeidos) && $cantidadMensajesNoLeidos > 0)
+                                    <span class="badge badge-danger badge-counter">
+                                        {{ $cantidadMensajesNoLeidos ?? '' }}
+                                    </span>
+                                @endif
+                            </a>
+                            <!-- Aquí puedes añadir el menú desplegable para mostrar mensajes -->
+                        </li>
 
                         <li class="nav-item ml-4 dropdown no-arrow">
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Common\mensajeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\LoginApiController;
@@ -38,6 +39,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('set-perfil', [perfilController::class, 'store']);
     Route::post('update-perfil', [perfilController::class, 'update']);
     Route::get('get-perfil', [perfilController::class, 'get']);
+
+    //Control de envios de mensajes
+    Route::post('create-mensaje',[mensajeController::class, 'store']);
 
     //Control de usuarios Jugadores
     Route::middleware('jugador.perfil')->group(function(){
