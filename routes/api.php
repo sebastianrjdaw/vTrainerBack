@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\LoginApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Auth\LoginApiController;
 use App\Http\Controllers\Api\Auth\RegisteredUserApiController;
 use App\Http\Controllers\Api\perfilController;
 use App\Http\Controllers\Api\equipoController;
+use App\Http\Controllers\Api\jugadorController;
+
 
 
 /*
@@ -53,8 +55,14 @@ Route::middleware('auth:sanctum')->group(function () {
         //Control de Equipos
         Route::get('equipos', [equipoController::class , 'index']);
         Route::get('mi-equipo',[equipoController::class, 'show']);
-        Route::post('equipo-entrenador', [equipoController::class , 'setUserEquipo']);
+        Route::post('create-equipo', [equipoController::class, 'store']);
+        Route::post('set-entrenador-equipo', [equipoController::class , 'setUserEquipo']);
         
+        //Control de Jugadores
+        Route::get('jugadores', [jugadorController::class, 'index']);
+        Route::get('jugador', [jugadorController::class, 'show']);
+        Route::post('create-jugador', [jugadorController::class, 'store']);
+        Route::post('update-jugador', [jugadorController::class, 'update']);
     });
 
 });
