@@ -71,7 +71,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         {{-- <a class="collapse-item" href="/todosPerfiles">Usuarios</a> --}}
                         <a class="collapse-item" href="{{ route('users.index') }}">Usuarios</a>
-                        <a class="collapse-item" href="#">Perfiles</a>
+                        <a class="collapse-item" href="{{route('mensajes.index')}}">Mensajes</a>
                     </div>
                 </div>
             </li>
@@ -112,6 +112,19 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link " href="{{route('mensajes.index')}}" id="messagesDropdown" role="button">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <!-- Contador de Mensajes No Leídos -->
+                                @if (isset($cantidadMensajesNoLeidos) && $cantidadMensajesNoLeidos > 0)
+                                    <span class="badge badge-danger badge-counter">
+                                        {{ $cantidadMensajesNoLeidos ?? '' }}
+                                    </span>
+                                @endif
+                            </a>
+                            <!-- Aquí puedes añadir el menú desplegable para mostrar mensajes -->
+                        </li>
 
                         <li class="nav-item ml-4 dropdown no-arrow">
 
@@ -168,13 +181,8 @@
                                 <img class="img-profile rounded-circle"
                                     src="{{ asset('img/undraw_profile.svg') }}" />
                             </a>
-                            <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="/perfil">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Perfil
-                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal"
                                     data-target="#logoutModal">

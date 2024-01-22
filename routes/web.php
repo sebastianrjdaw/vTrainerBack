@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Common\mensajeController;
 use App\Http\Controllers\userLogController;
+use App\Models\Mensaje;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\etiquetaController;
@@ -27,11 +29,17 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('admin.adminIndex');
+        $cantidadMensajesNoLeidos = Mensaje::where('estado', 0)->count();
+        return view('admin.adminIndex', ['cantidadMensajesNoLeidos' => $cantidadMensajesNoLeidos]);
     });
                 
     Route::resource('users', userController::class);
     Route::get('/user-logs',[userLogController::class, 'index']);
+    Route::get('/mensajes', [MensajeController::class, 'index'])->name('mensajes.index');
+    Route::get('/mensajes/{mensaje}', [MensajeController::class, 'show'])->name('mensajes.show');
+//    Route::post('/mensajes/{mensaje}/destroy', [MensajeController::class, 'destroy'])->name('mensajes.destroy');
+    Route::delete('/mensajes/{mensaje}', [mensajeController::class, 'destroy'])->name('mensajes.destroy');
+
 });
 
 //Gestion de Multi-Idioma

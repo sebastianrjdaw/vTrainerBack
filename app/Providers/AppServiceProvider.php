@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\View; 
 use Illuminate\Support\ServiceProvider;
+use App\Models\Mensaje;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        View::composer('*', function ($view) {
+            $cantidadMensajesNoLeidos = Mensaje::where('estado', 0)->count();
+            $view->with('cantidadMensajesNoLeidos', $cantidadMensajesNoLeidos);
+        });
     }
 }
