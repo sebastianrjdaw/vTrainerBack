@@ -31,8 +31,16 @@
                         <tbody>
                             @foreach ($mensajes as $mensaje)
                                 <tr>
-                                    <td>{{ $mensaje->tipo }}</td>
-                                    <td>{{ $mensaje->mensaje }}</td>
+                                    <td>
+                                        <a href="{{ route('mensajes.show', $mensaje->id) }}">
+                                            {{ $mensaje->tipo }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('mensajes.show', $mensaje->id) }}">
+                                            {{ Str::limit($mensaje->mensaje, 30) }}
+                                        </a>
+                                    </td>
                                     <td>{{ $mensaje->estado === 0 ? 'No leído' : 'Leído' }}</td>
                                     <td>
                                         <!-- Botón Eliminar -->

@@ -29,14 +29,17 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', function () {
-        $cantidadMensajesNoLeídos = Mensaje::where('estado', 0)->count();
-        return view('admin.adminIndex', ['cantidadMensajesNoLeídos' => $cantidadMensajesNoLeídos]);
+        $cantidadMensajesNoLeidos = Mensaje::where('estado', 0)->count();
+        return view('admin.adminIndex', ['cantidadMensajesNoLeidos' => $cantidadMensajesNoLeidos]);
     });
                 
     Route::resource('users', userController::class);
     Route::get('/user-logs',[userLogController::class, 'index']);
-    Route::get('/mensajes', [mensajeController::class, 'index']);
-    Route::delete('/mensajes/{mensaje}', [MensajeController::class, 'destroy'])->name('mensajes.destroy');
+    Route::get('/mensajes', [MensajeController::class, 'index'])->name('mensajes.index');
+    Route::get('/mensajes/{mensaje}', [MensajeController::class, 'show'])->name('mensajes.show');
+//    Route::post('/mensajes/{mensaje}/destroy', [MensajeController::class, 'destroy'])->name('mensajes.destroy');
+    Route::delete('/mensajes/{mensaje}', [mensajeController::class, 'destroy'])->name('mensajes.destroy');
+
 });
 
 //Gestion de Multi-Idioma

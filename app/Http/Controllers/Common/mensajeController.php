@@ -1,81 +1,52 @@
 <?php
-
 namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Mensaje;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class mensajeController extends Controller
+class MensajeController extends Controller
 {
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\View\View
-     */
     public function index()
     {
         $mensajes = Mensaje::all();
         return view('admin.mensajes.index', ['mensajes' => $mensajes]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'tipo' => 'required|string',
             'mensaje' => 'required|string',
         ]);
 
-        Mensaje::create([
-            'user_id' => auth()->id(),
-            'tipo' => $request->tipo,
-            'mensaje' => $request->mensaje,
-        ]);
-
+        Mensaje::create($validatedData + ['user_id' => auth()->id()]);
         return response()->json(['message' => 'Mensaje enviado correctamente'], 200);
     }
 
-    public function marcarComoLeido($mensajeId)
+    private function marcarComoLeido($mensajeId)
     {
-        $mensaje = Mensaje::find($mensajeId);
-        if ($mensaje) {
+        try {
+            $mensaje = Mensaje::findOrFail($mensajeId);
             $mensaje->estado = 1;
             $mensaje->save();
-            return back()->with('success', 'Mensaje marcado como leído.');
+        } catch (ModelNotFoundException $e) {
+            return back()->with('error', 'Mensaje no encontrado.');
         }
-
-        return back()->with('error', 'Mensaje no encontrado.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Contracts\View\View
-     */
     public function show($id)
     {
-        $mensaje = Mensaje::find($id);
-        return view('admin.mensaje.show', ['mensaje' => $mensaje]);
+        $mensaje = Mensaje::findOrFail($id);
+        $this->marcarComoLeido($id);
+        return view('admin.mensajes.show', ['mensaje' => $mensaje]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function destroy($id)
     {
-        $mensaje = Mensaje::find($id);
+        $mensaje = Mensaje::findOrFail($id);
         $mensaje->delete();
-        return redirect()->route('users.mensajes.index')->with('success', 'Mensaje eliminado exitosamente.');
+        return redirect()->route('mensajes.index')->with('success', 'Mensaje eliminado exitosamente.');
     }
 }

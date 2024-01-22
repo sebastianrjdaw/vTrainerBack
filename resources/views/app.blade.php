@@ -71,7 +71,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         {{-- <a class="collapse-item" href="/todosPerfiles">Usuarios</a> --}}
                         <a class="collapse-item" href="{{ route('users.index') }}">Usuarios</a>
-                        <a class="collapse-item" href="/mensajes">Mensajes</a>
+                        <a class="collapse-item" href="{{route('mensajes.index')}}">Mensajes</a>
                     </div>
                 </div>
             </li>
@@ -114,13 +114,12 @@
                     <ul class="navbar-nav ml-auto">
 
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link " href="/mensajes" id="messagesDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link " href="{{route('mensajes.index')}}" id="messagesDropdown" role="button">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Contador de Mensajes No Leídos -->
                                 @if (isset($cantidadMensajesNoLeidos) && $cantidadMensajesNoLeidos > 0)
                                     <span class="badge badge-danger badge-counter">
-                                        {{ $cantidadMensajesNoLeidos ?? '' }}
+                                        {{ $cantidadMensajesNoLeidos ?? '' }}3
                                     </span>
                                 @endif
                             </a>
