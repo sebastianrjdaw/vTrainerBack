@@ -119,7 +119,7 @@
                                 <!-- Contador de Mensajes No Leídos -->
                                 @if (isset($cantidadMensajesNoLeidos) && $cantidadMensajesNoLeidos > 0)
                                     <span class="badge badge-danger badge-counter">
-                                        {{ $cantidadMensajesNoLeidos ?? '' }}3
+                                        {{ $cantidadMensajesNoLeidos ?? '' }}
                                     </span>
                                 @endif
                             </a>
