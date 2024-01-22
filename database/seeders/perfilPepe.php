@@ -18,8 +18,6 @@ class perfilPepe extends Seeder
         
             'user_id' => 3,
             'tipoUsuario' => 'entrenador',
-            'nombreEquipo' => 'equipoPepe',
-              
     ]);
     }
 }

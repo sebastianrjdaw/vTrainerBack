@@ -34,6 +34,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/user-logs',[userLogController::class, 'index']);
 });
 
+//Gestion de Multi-Idioma
+Route::get('language/{locale}', function ($locale) {
+    app()->setLocale($locale);
+    session()->put('locale', $locale);
+    return redirect()->back();
+})->name('idioma');
 
 
 
@@ -58,12 +64,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // });
 
 
-//Gestion de Multi-Idioma
-Route::get('language/{locale}', function ($locale) {
-    app()->setLocale($locale);
-    session()->put('locale', $locale);
-    return redirect()->back();
-})->name('idioma');
 
 
 
