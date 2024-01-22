@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Jugador;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Perfil;
 use App\Models\User;
@@ -31,6 +32,14 @@ class perfilController extends Controller
         $perfil = new Perfil();
         $perfil->tipoUsuario = $request->tipoUsuario;
         $perfil->user_id = $userId;
+        
+        if($request->tiposUsuario == 'jugador'){
+            $jugador  = Jugador::find($request->user()->id);
+            
+            if($request->codigo_judador != $jugador->codigo_judador){
+                return response()->json(['message'=>'codigo de jugador Erroneo']);
+            }
+        }
 
         try {
             $perfil->save();
