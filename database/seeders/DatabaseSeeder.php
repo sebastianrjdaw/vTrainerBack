@@ -19,12 +19,13 @@ class DatabaseSeeder extends Seeder
             pepeSeeder::class,
             etiquetasSeeder::class,
             perfilPepe::class,
-            equipoPepe::class,
-            jugadoresPepe::class,
-            jornadaPepe::class,
-            statsJugadoresPepe::class,
-            EntrenamientosSeeder::class,
-            etiquetasEntrenamientoSeeder::class,
+            EquiposSeeder::class,
+            //equipoPepe::class,
+            //jugadoresPepe::class,
+            //jornadaPepe::class,
+            //statsJugadoresPepe::class,
+            //EntrenamientosSeeder::class,
+            //etiquetasEntrenamientoSeeder::class,
         ]);
 
          \App\Models\User::factory(10)->create();

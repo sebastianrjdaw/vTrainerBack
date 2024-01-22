@@ -9,7 +9,7 @@ use App\Models\User;
 class Perfil extends Model
 {
     use HasFactory;
-
+    
     protected $primaryKey = 'user_id';
 
     public function user()
