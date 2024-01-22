@@ -4,7 +4,13 @@ use App\Http\Controllers\Common\mensajeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\LoginApiController;
+use App\Http\Controllers\Api\Auth\LoginApiController;
 use App\Http\Controllers\Api\Auth\RegisteredUserApiController;
+use App\Http\Controllers\Api\perfilController;
+use App\Http\Controllers\Api\equipoController;
+use App\Http\Controllers\Api\jugadorController;
+
+
 use App\Http\Controllers\Api\perfilController;
 use App\Http\Controllers\Api\equipoController;
 use App\Http\Controllers\Api\jugadorController;
@@ -34,6 +40,7 @@ Route::post('/register', [RegisteredUserApiController::class, 'store']);
 Route::post('/login', [LoginApiController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
+
 
     //Control del perfil
     Route::post('set-perfil', [perfilController::class, 'store']);
