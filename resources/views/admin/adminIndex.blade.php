@@ -24,6 +24,7 @@
                 <div class="mt-4">
                     <a href="{{ route('users.index') }}" class="btn btn-primary">Ver Usuarios</a>
                     <a href="/user-logs" class="btn btn-primary ">Ver Logs de Usuarios</a>
+                    <a href="{{ route('mensajes.index') }}" class="btn btn-primary ">Ver Mensajes Reportados</a>
                 </div>
             </div>
         </div>
