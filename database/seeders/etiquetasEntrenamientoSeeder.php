@@ -14,12 +14,14 @@ class etiquetasEntrenamientoSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 1; $i <6 ;$i++){
-            DB::table('entrenamiento_etiqueta')->insert([
-            'entrenamiento_id' => $i,
-            'etiqueta_id'=>$i
-            ]);
+        // Asignar dos etiquetas a cada uno de los dos primeros entrenamientos
+        for ($i = 1; $i <= 2; $i++) {
+            for ($j = 1; $j <= 2; $j++) {
+                DB::table('entrenamiento_etiqueta')->insert([
+                    'entrenamiento_id' => $i,
+                    'etiqueta_id' => ($i - 1) * 2 + $j,
+                ]);
+            }
         }
-        
     }
 }

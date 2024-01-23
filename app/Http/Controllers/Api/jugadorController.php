@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Jugador;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Str;
+use App\Models\Equipo;
 
 class jugadorController extends Controller
 {
@@ -18,7 +19,20 @@ class jugadorController extends Controller
     public function index()
     {
         $jugadores = Jugador::All();
-        return response()->json(['jugadores'=>$jugadores,200]);
+        return response()->json(['jugadores'=>$jugadores],200);
+    }
+
+    /**
+     * Obtener los jugadores del Equipo del entrenador
+     */
+
+    public function getJugadoresEquipo(Request $request){
+        $equipoId = $request->user()->equipo->id;
+        $jugadores = Jugador::where('equipo_id',$equipoId)->get();
+        if($jugadores){
+            return response()->json(['jugadores'=>$jugadores],200);
+        }
+        return response()->json(['No tienes jugadores en tu equipo']);
     }
 
     /**
@@ -41,16 +55,17 @@ class jugadorController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $equipoId = $request->user()->equipo->id;
+        
         $jugador = new Jugador();
         $jugador->nombre = $request->nombre;
         $jugador->apellidos = $request->apellidos;
         $jugador->dorsal = $request->dorsal;
         $jugador->altura = $request->altura;
         $jugador->posicion = $request->posicion;
-        $jugador->equipo_id=$equipoId;
+        $jugador->codigo_jugador = Str::random(10);
+        $jugador->equipo_id = $request->user()->equipo->id;
         $jugador->save();
-        return response()->json(['message'=>'Jugador creado correctamente',200]);
+        return response()->json(['message'=>'Jugador creado correctamente'],200);
     }
 
     /**
@@ -62,10 +77,17 @@ class jugadorController extends Controller
     public function show(Request $request)
     {
         $jugador=Jugador::find($request->id);
+        $equipo = Equipo::find($jugador->equipo_id);
         if($jugador){
-            return response()->json(['jugador'=>$jugador]);
+            return response()->json([
+                'nombre' => $jugador->nombre,
+                'apellidos' => $jugador->apellidos,
+                'dorsal' => $jugador->dorsal,
+                'altura' => $jugador->altura,
+                'equipo' => $equipo->nombre 
+            ]);
         }
-        return response()->json(['message'=>'Jugador no encontrado',404]);        
+        return response()->json(['message'=>'Jugador no encontrado'],404);        
     }
 
     /**
@@ -116,8 +138,8 @@ class jugadorController extends Controller
     {
         $jugador = Jugador::find($request->id);
         if($jugador){
-            return response()->json(['message'=>'El jugador '.$jugador->nombre.' se elimino correctamente', 200]);
+            return response()->json(['message'=>'El jugador '.$jugador->nombre.' se elimino correctamente'],200);
         }
-        return response()->json(['message'=>'No se encontro el jugador',404]);
+        return response()->json(['message'=>'No se encontro el jugador'],404);
     }
 }

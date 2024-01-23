@@ -24,7 +24,7 @@ class CreateJugadorsTable extends Migration
             $table->string('codigo_jugador')->unique();
             $table->boolean('activo')->default(false);
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('equipo_id')->nullable();
+            $table->unsignedBigInteger('equipo_id');
             $table->foreign('equipo_id')->references('id')->on('equipos');
             $table->foreign('user_id')->references('id')->on('users');
 

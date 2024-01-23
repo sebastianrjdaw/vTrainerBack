@@ -24,14 +24,13 @@ class equipoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Mostrar los equipos Federados Predefinidos
+     * 
      */
-    public function create()
-    {
-        $usuario  = Auth::user();
-        return view('equipo.create', ['usuario'=>$usuario]);
+
+    public function getDefaults(){
+        $equipos = Equipo::where('user_id',null)->get();
+        return response()->json(['equiposDefaults'=>$equipos]);
     }
 
     /**
@@ -53,11 +52,18 @@ class equipoController extends Controller
         $equipo->competicion = $request->competicion;
         $equipo->user_id=$request->user()->id;
         $equipo->save();
-        $usuario=User::find($equipo->entrenador_id);
+        // $usuario=User::find($equipo->entrenador_id);
         
         return response()->json(['message'=>'Equipo Creado correctamente', 200]);
     }
 
+
+    /**
+     * Funcion para asignar un entrenador a los equipos prestablecidos
+     *
+     * @param Request $request
+     * @return void
+     */
     public function setUserEquipo(Request $request){
         $equipo = Equipo::find($request->id);
         $user = $request->user();

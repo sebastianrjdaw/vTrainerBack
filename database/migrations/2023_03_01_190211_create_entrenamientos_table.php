@@ -16,8 +16,9 @@ class CreateEntrenamientosTable extends Migration
         Schema::create('entrenamientos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('Titulo');
-            $table->string('Cuerpo');
+            $table->string('titulo');
+            $table->string('cuerpo');
+            $table->unsignedBigInteger('created_by');
         });
     }
 

@@ -25,6 +25,6 @@ class JugadorMiddleware
 
         // Redireccionar o mostrar un error si el usuario no cumple con los criterios
         //return redirect('ruta-donde-redireccionar')->with('error', 'Acceso no permitido.');
-        return response()->json(['message'=>'No tienes perfil de jugador',401]);
+        return response()->json(['message'=>'No tienes perfil de jugador'],401);
     }
 }

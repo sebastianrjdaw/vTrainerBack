@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Equipo;
 use App\Models\JugadorEstadistica;
+use App\Models\User;
 
 
 class Jugador extends Model
@@ -17,5 +18,8 @@ class Jugador extends Model
     }
     public function estadisticas(){
         return $this->hasMany(JugadorEstadistica::class);
+    }
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }
