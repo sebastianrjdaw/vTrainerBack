@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Entrenamiento;
+use App\Models\Etiqueta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,23 +17,62 @@ class entrenamientoController extends Controller
      */
     public function index()
     {
-        $entrenamientos = Entrenamiento::all();
+        $entrenamientos = Entrenamiento::with('etiquetas')->get();
         return response()->json([$entrenamientos]);
     }
 
-    public function getEntrenamientosDefaults(){
-        $entrenamientos = Entrenamiento::where('created_by',0)->get();
+    public function getEntrenamientosDefaults()
+    {
+        $entrenamientos = Entrenamiento::with('etiquetas')
+            ->where('user_id', null)
+            ->get();
 
-        return response()->json(['entrenamientos',$entrenamientos]);
+        $entrenamientosTransformados = $entrenamientos->map(function ($entrenamiento) {
+            // Extraer solo los campos necesarios de las etiquetas
+            $etiquetasTransformadas = $entrenamiento->etiquetas->map(function ($etiqueta) {
+                return [
+                    'id' => $etiqueta->id,
+                    'titulo' => $etiqueta->titulo,
+                ];
+            });
+
+            return [
+                'id' => $entrenamiento->id,
+                'titulo' => $entrenamiento->titulo,
+                'cuerpo' => $entrenamiento->cuerpo,
+                'etiquetas' => $etiquetasTransformadas,
+            ];
+        });
+
+        return response()->json(['entrenamientos' => $entrenamientosTransformados]);
     }
 
-    public function getEntrenemientosUser(Request $request){
+    public function getEntrenamientosUser(Request $request)
+    {
         $user = $request->user();
-        $entrenamientos = Entrenamiento::where('created_by',$user->id);
+        $entrenamientos = Entrenamiento::where('user_id', $user->id)->get();
 
-        return response()->json(['entrenamientos', $entrenamientos]);
+        
+        $entrenamientosTransformados = $entrenamientos->map(function ($entrenamiento) {
+            // Extraer solo los campos necesarios de las etiquetas
+            $etiquetasTransformadas = $entrenamiento->etiquetas->map(function ($etiqueta) {
+                return [
+                    'id' => $etiqueta->id,
+                    'titulo' => $etiqueta->titulo,
+                ];
+            });
+
+            return [
+                'id' => $entrenamiento->id,
+                'titulo' => $entrenamiento->titulo,
+                'cuerpo' => $entrenamiento->cuerpo,
+                'etiquetas' => $etiquetasTransformadas,
+                'editable' => isset($entrenamiento->user_id)
+            ];
+        });
+
+        return response()->json(['entrenamientos' => $entrenamientosTransformados]);
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -45,24 +85,29 @@ class entrenamientoController extends Controller
         $validator = Validator::make($request->all(), [
             'titulo' => 'required|string',
             'cuerpo' => 'required|string',
+            'etiquetas' => 'array',
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
+    
         $entrenamiento = new Entrenamiento();
         $entrenamiento->titulo = $request->titulo;
         $entrenamiento->cuerpo = $request->cuerpo;
-        $entrenamiento->created_by = $request->user()->id;
-        foreach ($request->etiquetas as $etiqueta){
+        $entrenamiento->user_id = $request->user()->id;
+        
+        // Primero, guarda el Entrenamiento
+        $entrenamiento->save();
+    
+        // Después de guardar, el Entrenamiento tiene un ID asignado y puedes adjuntar las etiquetas
+        foreach ($request->etiquetas as $etiqueta) {
             $entrenamiento->etiquetas()->attach($etiqueta);
         }
-        $entrenamiento->save();
-
-        return response()->json(['message'=>'Etiqueta creada correctamente'],200); 
-
+    
+        return response()->json(['message' => 'Entrenamiento creado correctamente'], 200);
     }
+    
 
     /**
      * Display the specified resource.
@@ -84,27 +129,38 @@ class entrenamientoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'titulo' => 'required|string',
             'cuerpo' => 'required|string',
+            'etiquetas' => 'array', 
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $entrenamiento = new Entrenamiento();
+        $entrenamiento = Entrenamiento::find($request->id);
+        
+        if (!$entrenamiento) {
+            return response()->json(['message' => 'Entrenamiento no encontrado'], 404);
+        }
+
+        if($entrenamiento->user_id == null){
+            return response()->json(['message' => 'Entrenamiento no es editable'], 404);
+        }
+
         $entrenamiento->titulo = $request->titulo;
         $entrenamiento->cuerpo = $request->cuerpo;
-        $entrenamiento->created_by = $request->user()->id;
-        foreach ($request->etiquetas as $etiqueta){
-            $entrenamiento->etiquetas()->attach($etiqueta);
-        }
+        $entrenamiento->user_id = $request->user()->id;
+
+        // Usar sync para actualizar las etiquetas sin duplicados
+        $entrenamiento->etiquetas()->sync($request->etiquetas ?? []);
+
         $entrenamiento->save();
 
-        return response()->json(['message'=>'Entrenamiento creado correctamente'],200); 
+        return response()->json(['message' => 'Entrenamiento actualizado correctamente'], 200);
     }
 
     /**
@@ -119,7 +175,6 @@ class entrenamientoController extends Controller
         $entrenamiento->etiquetas()->detach();
         $entrenamiento->delete();
 
-        return response()->json(['message'=>'Entrenamiento eliminado correctamente'],200); 
-
+        return response()->json(['message' => 'Entrenamiento eliminado correctamente'], 200);
     }
 }

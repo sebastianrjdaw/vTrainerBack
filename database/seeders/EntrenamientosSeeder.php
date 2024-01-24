@@ -26,7 +26,7 @@ class EntrenamientosSeeder extends Seeder
             DB::table('entrenamientos')->insert([
                 'titulo' => $entrenamiento['titulo'],
                 'cuerpo' => $entrenamiento['cuerpo'],
-                'created_by' => 0,
+                'user_id' => null,
             ]);
         }
     }

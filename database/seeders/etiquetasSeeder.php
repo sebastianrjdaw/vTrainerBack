@@ -19,7 +19,7 @@ class etiquetasSeeder extends Seeder
         foreach($etiquetas as $etiqueta){
             DB::table('etiquetas')->insert([
                 'titulo' => $etiqueta,
-                'created_by' => 0
+                'user_id' => null
             ]);
             }
     

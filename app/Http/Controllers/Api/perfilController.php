@@ -45,7 +45,7 @@ class perfilController extends Controller
         $request->validate([
             'tipoUsuario' => 'required|string|in:entrenador,jugador',
         ]);
-        
+
         $userId = Auth::id();
 
         // Verificar si el usuario ya tiene un perfil
@@ -59,7 +59,6 @@ class perfilController extends Controller
 
         // Control de Asociar un perfil a jugador
         if ($request->tipoUsuario == 'jugador') {
-
             $resultado = $this->registrarJugador($request->codigo_jugador, $userId);
             if (array_key_exists('error', $resultado)) {
                 return response()->json(['message' => $resultado['error']], 404);
@@ -73,7 +72,6 @@ class perfilController extends Controller
             return response()->json(['message' => 'Error al crear el perfil']);
         }
     }
-
 
     /**
      * Update the specified resource in storage.

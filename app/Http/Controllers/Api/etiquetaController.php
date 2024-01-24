@@ -19,12 +19,14 @@ class etiquetaController extends Controller
         return response()->json([$etiquetas]);
     }
 
-    public function getEtiquetasDefaults(){
-        $etiquetas = Etiqueta::where('created_by', 0)->get();
+    public function getEtiquetasDefaults()
+    {
+        $etiquetas = Etiqueta::where('created_by', null)->get();
         return response()->json($etiquetas);
     }
 
-    public function getEtiquetasUser(Request $request){
+    public function getEtiquetasUser(Request $request)
+    {
         $user = $request->user();
         $etiquetas = Etiqueta::where('created_by', $user->id)->get();
         return response()->json($etiquetas);
@@ -51,8 +53,7 @@ class etiquetaController extends Controller
         $etiqueta->created_by = $request->user()->id;
         $etiqueta->save();
 
-        return response()->json(['message'=>'Etiqueta creada correctamente'],200); 
-
+        return response()->json(['message' => 'Etiqueta creada correctamente'], 200);
     }
 
     /**
@@ -88,7 +89,7 @@ class etiquetaController extends Controller
         $etiqueta->titulo = $request->titulo;
         $etiqueta->save();
 
-        return response()->json(['message'=>'Etiqueta actualizada correctamente'],200); 
+        return response()->json(['message' => 'Etiqueta actualizada correctamente'], 200);
     }
 
     /**
@@ -101,7 +102,7 @@ class etiquetaController extends Controller
     {
         $etiqueta = Etiqueta::find($id);
         $etiqueta->delete();
-        
-        return response()->json(['message'=>'Etiqueta eliminada correctamente']);
+
+        return response()->json(['message' => 'Etiqueta eliminada correctamente']);
     }
 }

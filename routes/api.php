@@ -71,12 +71,17 @@ Route::middleware('auth:sanctum')->group(function () {
 
         //Control de Entrenamientos
         Route::get('entrenamientos', [entrenamientoController::class, 'index']);
-        Route::get('entrenamientos-defaults', [entrenamientoController::class,'getEntrenemientosDefaults']);
+        Route::get('entrenamientos-defaults', [entrenamientoController::class,'getEntrenamientosDefaults']);
         Route::get('entrenamientos-user', [entrenamientoController::class, 'getEntrenamientosUser']);
+        Route::post('create-entrenamiento',[entrenamientoController::class, 'store']);
+        Route::post('update-entrenamiento',[entrenamientoController::class, 'update']);
+
 
         //Control de Etiquetas
         Route::get('etiquetas', [etiquetaController::class, 'index']);
         Route::get('etiquetas-defaults', [etiquetaController::class,'getEtiquetasDefaults']);
         Route::get('etiquetas-user', [etiquetaController::class, 'getetiquetasUser']);
+        Route::get('create-etiqueta', [etiquetaController::class, 'store']);
+
     });
 });
