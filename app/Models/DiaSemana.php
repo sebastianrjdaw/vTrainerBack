@@ -9,7 +9,7 @@ use App\Models\DiaTipo;
 class DiaSemana extends Model
 {
     use HasFactory;
-
+    protected $table = 'dia_semanas';
     public function diaTipo(){
         return $this->belongsTo(DiaTipo::class);
     }

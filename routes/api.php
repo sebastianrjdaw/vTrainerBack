@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\equipoController;
 use App\Http\Controllers\Api\jugadorController;
 use App\Http\Controllers\Api\entrenamientoController;
 use App\Http\Controllers\Api\etiquetaController;
+use App\Http\Controllers\Api\semanaEntrenamientoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,6 +83,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('etiquetas-defaults', [etiquetaController::class,'getEtiquetasDefaults']);
         Route::get('etiquetas-user', [etiquetaController::class, 'getetiquetasUser']);
         Route::get('create-etiqueta', [etiquetaController::class, 'store']);
+
+        //Control de Semana de entrenamientos
+        Route::get('semanas-entrenamientos',[semanaEntrenamientoController::class,'index']);
+        Route::post('create-semana-entrenamiento',[semanaEntrenamientoController::class,'store']);
 
     });
 });
