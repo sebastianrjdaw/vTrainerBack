@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             etiquetasEntrenamientoSeeder::class,
             perfilPepe::class,
             EquiposSeeder::class,
+            DiaTipo::class,
             //equipoPepe::class,
             //jugadoresPepe::class,
             //jornadaPepe::class,
