@@ -21,8 +21,8 @@ class etiquetaController extends Controller
 
     public function getEtiquetasDefaults()
     {
-        $etiquetas = Etiqueta::where('created_by', null)->get();
-        return response()->json($etiquetas);
+        $etiquetasDefaults = Etiqueta::whereNull('created_by')->get();
+        return response()->json($etiquetasDefaults);
     }
 
     public function getEtiquetasUser(Request $request)

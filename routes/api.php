@@ -39,11 +39,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('update-perfil', [perfilController::class, 'update']);
     Route::get('get-perfil', [perfilController::class, 'get']);
 
-    //Control de envios de mensajes
-    Route::post('create-mensaje', [MensajeController::class, 'store']);
 
     //Controles comunes
     Route::get('mi-equipo', [equipoController::class, 'show']);
+    //Control de envios de mensajes
+    Route::post('create-mensaje', [MensajeController::class, 'store']);
+    
 
     //Control de usuarios Jugadores
     Route::middleware('jugador.perfil')->group(function () {
