@@ -15,11 +15,11 @@ class CreateSesionsTable extends Migration
     {
         Schema::create('sesions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('equipo_id');
             $table->dateTime('fecha');
             $table->dateTime('hora_inicio');
             $table->dateTime('hora_fin');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('equipo_id')->references('id')->on('equipos')->onDelete('cascade');
             $table->timestamps();
         });
     }

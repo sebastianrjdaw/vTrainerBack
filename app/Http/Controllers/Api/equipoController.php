@@ -71,20 +71,32 @@ class equipoController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Devolver el equipo del jugador o del entrenador.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
-        $usuario = User::find(Auth::id());
+        $usuario = $request->user();
+
+        // Intenta obtener el equipo directamente asociado al usuario (caso de los entrenadores)
         $equipo = $usuario->equipo;
-        if ($equipo) {
-            return response()->json(['equipo' => $equipo]);
+
+        // Si no se encuentra un equipo directamente, busca a través del perfil de jugador
+        if (!$equipo) {
+            $jugador = $usuario->jugador;
+            if ($jugador) {
+                $equipo = $jugador->equipo;
+            }
         }
 
-        return response()->json(['message' => 'No hay un equipo asociado']);
+        // Verifica si se encontró un equipo, ya sea directamente o a través del perfil de jugador
+        if ($equipo) {
+            return response()->json(['equipo' => $equipo]);
+        } else {
+            return response()->json(['message' => 'No hay un equipo asociado al usuario.'], 404);
+        }
     }
 
     /**

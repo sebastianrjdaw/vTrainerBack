@@ -14,7 +14,6 @@ use App\Models\EquipoEstadistica;
 class Equipo extends Model
 {
     use HasFactory;
-
     public function user(){
         return $this->belongsTo(User::class);
     }

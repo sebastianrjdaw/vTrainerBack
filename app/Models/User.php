@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Perfil;
 use App\Models\Equipo;
+use App\Models\Jugador;
 
 
 class User extends Authenticatable
@@ -63,5 +64,8 @@ class User extends Authenticatable
     public function mensajes()
     {
         return $this->hasMany(Mensaje::class);
+    }
+    public function jugador(){
+        return $this->hasOne(Jugador::class);
     }
 }
