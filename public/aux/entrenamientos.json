@@ -1,0 +1,38 @@
+[
+    {
+        "titulo": "Pases en Triángulo",
+        "cuerpo": "Se forman grupos de tres jugadores en un triángulo. El ejercicio consiste en realizar pases de colocación entre ellos, rotando las posiciones tras cada pase. Mejora la precisión y la comunicación."
+        
+    },
+    {
+        "titulo": "Colocación Bajo Presión",
+        "cuerpo": "Dos jugadores se colocan en lados opuestos de la red, uno realiza un saque. El receptor debe controlar y realizar una colocación precisa a un tercer jugador. Mejora la colocación bajo presión."
+        
+    },
+    {
+        "titulo": "Remates y Control de Dirección",
+        "cuerpo": "Un colocador envía balones a diferentes alturas y direcciones para que el atacante ejecute remates. Se enfoca en variar la dirección y fuerza del ataque."
+        
+    },
+    {
+        "titulo": "Ejercicio de Ataque Combinado",
+        "cuerpo": "Se practican jugadas de ataque combinando diferentes atacantes. Un colocador envía balones a distintos atacantes que ejecutan remates consecutivamente. Mejora la sincronización y la variedad en ataques."
+        
+    },
+    {
+        "titulo": "Reacción y Desplazamiento",
+        "cuerpo": "Se lanzan balones de manera impredecible a diferentes zonas de la cancha. Los jugadores deben reaccionar rápidamente para una defensa efectiva. Mejora la agilidad y la capacidad de reacción."
+    },
+    {
+        "titulo": "Defensa de Campo Completo",
+        "cuerpo": "Se divide el equipo en dos grupos. Un grupo realiza ataques mientras el otro se enfoca en la defensa. Simula condiciones de juego real y mejora la coordinación en equipo."
+    },
+    {
+        "titulo": "Bloqueo en Serie",
+        "cuerpo": "Un atacante realiza una serie de remates contra un bloqueador. El bloqueador ajusta su posición y tiempo de salto para bloquear o desviar cada remate."
+    },
+    {
+        "titulo": "Bloqueo y Transición a Ataque",
+        "cuerpo": "Un jugador realiza un bloqueo y, luego, se prepara para un ataque rápido. Simula una situación de juego donde el bloqueador transiciona entre defensa y ataque."
+    }
+]

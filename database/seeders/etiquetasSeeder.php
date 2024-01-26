@@ -15,13 +15,13 @@ class etiquetasSeeder extends Seeder
     public function run()
     {
 
-        $etiquetas =['Defensa','Colocacion','Recepcion','Bloqueo','Ataque'];
+        $etiquetas =['colocacion','ataque','defensa','bloqueo'];
         foreach($etiquetas as $etiqueta){
             DB::table('etiquetas')->insert([
-                'Titulo'=> $etiqueta,
+                'titulo' => $etiqueta,
+                'user_id' => null
             ]);
             }
-               
     
     }
 }

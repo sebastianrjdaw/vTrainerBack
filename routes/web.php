@@ -24,6 +24,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 //Entrada sin registro
 Route::get('/', function () {
+    
     return view('invitado');
 });
 

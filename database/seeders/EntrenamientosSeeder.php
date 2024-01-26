@@ -13,17 +13,21 @@ class EntrenamientosSeeder extends Seeder
      * @return void
      */
     public function run()
-
     {
-        $titulos=['Defensa','Colocacion','Recepcion','Bloqueo','Ataque'];
+        $jsonPath = base_path('/public/aux/entrenamientos.json');
 
-        foreach ($titulos as $titulo) {
+        // Leer el contenido del archivo JSON
+        $json = file_get_contents($jsonPath);
+
+        // Convertir JSON a array PHP
+        $entrenamientos = json_decode($json, true);
+
+        foreach ($entrenamientos as $entrenamiento) {
             DB::table('entrenamientos')->insert([
-        
-                'Titulo' => 'E.'.$titulo,
-                'Cuerpo' =>'Esto es un entrenamiento sobre'.$titulo
+                'titulo' => $entrenamiento['titulo'],
+                'cuerpo' => $entrenamiento['cuerpo'],
+                'user_id' => null,
             ]);
         }
-        
     }
 }

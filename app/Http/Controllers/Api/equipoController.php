@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class equipoController extends Controller
 {
-
-    
-
     /**
      * Display a listing of the resource.
      *
@@ -20,18 +17,18 @@ class equipoController extends Controller
     public function index()
     {
         $equipos = Equipo::all();
-        return response()->json(['equipos'=>$equipos]);
+        return response()->json(['equipos' => $equipos]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Mostrar los equipos Federados Predefinidos
      *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+
+    public function getDefaults()
     {
-        $usuario  = Auth::user();
-        return view('equipo.create', ['usuario'=>$usuario]);
+        $equipos = Equipo::where('user_id', null)->get();
+        return response()->json(['equiposDefaults' => $equipos]);
     }
 
     /**
@@ -44,26 +41,33 @@ class equipoController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|min:3|max:30',
-            'ubicacion'=>'required|string|min:3|max:40',
-            'competicion'=>'required|string'
+            'ubicacion' => 'required|string|min:3|max:40',
+            'competicion' => 'required|string',
         ]);
         $equipo = new Equipo();
         $equipo->nombre = $request->nombre;
         $equipo->ubicacion = $request->ubicacion;
         $equipo->competicion = $request->competicion;
-        $equipo->user_id=$request->user()->id;
+        $equipo->user_id = $request->user()->id;
         $equipo->save();
-        $usuario=User::find($equipo->entrenador_id);
-        
-        return response()->json(['message'=>'Equipo Creado correctamente', 200]);
+        // $usuario=User::find($equipo->entrenador_id);
+
+        return response()->json(['message' => 'Equipo Creado correctamente', 200]);
     }
 
-    public function setUserEquipo(Request $request){
+    /**
+     * Funcion para asignar un entrenador a los equipos prestablecidos
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function setUserEquipo(Request $request)
+    {
         $equipo = Equipo::find($request->id);
         $user = $request->user();
         $equipo->user_id = $user->id;
         $equipo->save();
-        return response()->json(['message'=>'Entrenador asignado correctamente','equipo'=>$equipo]);
+        return response()->json(['message' => 'Entrenador asignado correctamente', 'equipo' => $equipo]);
     }
 
     /**
@@ -76,12 +80,11 @@ class equipoController extends Controller
     {
         $usuario = User::find(Auth::id());
         $equipo = $usuario->equipo;
-        if($equipo){
-            return response()->json(['equipo'=>$equipo]);
+        if ($equipo) {
+            return response()->json(['equipo' => $equipo]);
         }
 
-        return response()->json(['message'=>'No hay un equipo asociado']);
-
+        return response()->json(['message' => 'No hay un equipo asociado']);
     }
 
     /**

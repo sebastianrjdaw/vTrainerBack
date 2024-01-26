@@ -35,18 +35,18 @@ class RegisteredUserApiController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
-            
+
             UserLog::create([
                 'user_id' => $user->id,
-                'action' => 'Se ha registrado el usuario ('.$user->name.' | id: '.$user->id.' ) desde la web',
-                'importance_level' => 1
+                'action' => 'Se ha registrado el usuario (' . $user->name . ' | id: ' . $user->id . ' ) desde la web',
+                'importance_level' => 1,
             ]);
 
             event(new Registered($user));
 
             Auth::login($user);
 
-            return response()->json(["user" => $user]);
+            return response()->json(['user' => $user]);
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);
         }

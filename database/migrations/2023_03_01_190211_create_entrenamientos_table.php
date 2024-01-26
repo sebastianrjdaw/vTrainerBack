@@ -16,8 +16,10 @@ class CreateEntrenamientosTable extends Migration
         Schema::create('entrenamientos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('Titulo');
-            $table->string('Cuerpo');
+            $table->string('titulo');
+            $table->string('cuerpo');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
