@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\equipoController;
 use App\Http\Controllers\Api\jugadorController;
 use App\Http\Controllers\Api\entrenamientoController;
 use App\Http\Controllers\Api\etiquetaController;
-
+use App\Http\Controllers\Api\sesionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -83,5 +83,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('etiquetas-user', [etiquetaController::class, 'getetiquetasUser']);
         Route::get('create-etiqueta', [etiquetaController::class, 'store']);
 
+        //Control de SesionesEntrenamietos
+        Route::post('create-sesion', [sesionController::class, 'store']);
+        Route::get('sesion', [sesionController::class, 'show']);
+        
     });
 });

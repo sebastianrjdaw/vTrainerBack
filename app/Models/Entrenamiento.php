@@ -15,4 +15,7 @@ class Entrenamiento extends Model
     public function etiquetas(){
         return $this->belongsToMany(Etiqueta::class);
     }
+    public function sesiones(){
+        return $this->belongsToMany(Sesion::class);
+    }
 }
