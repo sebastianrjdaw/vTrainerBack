@@ -16,16 +16,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             adminSeeder::class,
             usuarioSeeder::class,
-            pepeSeeder::class,
             etiquetasSeeder::class,
             EntrenamientosSeeder::class,
             etiquetasEntrenamientoSeeder::class,
-            perfilPepe::class,
             EquiposSeeder::class,
-            //equipoPepe::class,
-            //jugadoresPepe::class,
-            //jornadaPepe::class,
-            //statsJugadoresPepe::class,
         ]);
 
          \App\Models\User::factory(10)->create();

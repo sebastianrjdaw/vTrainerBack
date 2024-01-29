@@ -17,7 +17,7 @@ class perfilController extends Controller
 
         // Si el jugador no existe o ya está asociado a un usuario
         if (!$jugador || $jugador->user_id) {
-            return ['error' => 'Código de jugador erróneo o ya está asociado a un usuario.'];
+            return ['error' => 'Código de jugador erróneo o ya está asociado a un usuario. CodJugador '.$codigoJugador.''];
         }
 
         // Asignar el user_id al jugador encontrado

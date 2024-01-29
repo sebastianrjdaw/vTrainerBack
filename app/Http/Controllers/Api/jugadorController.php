@@ -65,7 +65,7 @@ class jugadorController extends Controller
         $jugador->codigo_jugador = Str::random(10);
         $jugador->equipo_id = $request->user()->equipo->id;
         $jugador->save();
-        return response()->json(['message' => 'Jugador creado correctamente'], 200);
+        return response()->json(['message' => 'Jugador creado correctamente', 'info_jugador'=>$jugador], 200);
     }
 
     /**

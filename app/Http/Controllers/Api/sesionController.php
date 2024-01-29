@@ -48,7 +48,7 @@ class sesionController extends Controller
     
             // Verificar si se encontraron sesiones
             if ($sesionesSemanaActual->isEmpty() && $sesionesSemanaSiguiente->isEmpty()) {
-                return response()->json(['message' => 'No se encontraron sesiones para las semanas seleccionadas.'], 404);
+                return response()->json(['message' => 'No se encontraron sesiones para las semanas seleccionadas.','semanas'=>['i']], 404);
             }
     
             return response()->json([

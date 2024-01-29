@@ -16,12 +16,15 @@ class usuarioSeeder extends Seeder
 
     public function run()
     {
-        DB::table('users')->insert([
+        $datos = ['jugador','entrenador'];
+        foreach ($datos as $dato){
+            DB::table('users')->insert([
 
-            'name' => 'usuario',
-            'email' => 'usuario@usuario.com',
-            'rol' => 'usuario',
-            'password' => Hash::make('12345678')
-        ]);
+                'name' => $dato,
+                'email' => $dato.'@'.$dato.'.com',
+                'rol' => 'usuario',
+                'password' => Hash::make($dato)
+            ]);
+        }
     }
 }
