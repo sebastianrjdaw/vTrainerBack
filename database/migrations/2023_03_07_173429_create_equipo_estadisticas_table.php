@@ -25,6 +25,7 @@ class CreateEquipoEstadisticasTable extends Migration
             $table->float('colocacion');
             $table->float('saque');
             $table->foreign('jornada_id')->references('id')->on('jornadas')->onDelete('cascade');
+            $table->foreign('equipo_id')->references('id')->on('equipos')->onDelete('cascade');
         });
     }
 

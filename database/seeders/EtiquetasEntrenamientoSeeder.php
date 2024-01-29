@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class etiquetasEntrenamientoSeeder extends Seeder
+class EtiquetasEntrenamientoSeeder extends Seeder
 {
     /**
      * Run the database seeds.

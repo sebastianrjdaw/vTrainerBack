@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Equipo;
+use Carbon\Carbon;
 use App\Models\Jugador;
+use App\Models\Posicion;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use App\Models\Equipo;
 
 class jugadorController extends Controller
 {
@@ -22,6 +24,11 @@ class jugadorController extends Controller
         return response()->json(['jugadores' => $jugadores], 200);
     }
 
+    public function getPosiciones(){
+        $posiciones = Posicion::all();
+        return response()->json(['posiciones'=>$posiciones]);
+    }
+
     /**
      * Obtener los jugadores del Equipo del entrenador
      */
@@ -29,7 +36,7 @@ class jugadorController extends Controller
     public function getJugadoresEquipo(Request $request)
     {
         $equipoId = $request->user()->equipo->id;
-        $jugadores = Jugador::where('equipo_id', $equipoId)->get();
+        $jugadores = Jugador::with('posicion')->where('equipo_id', $equipoId)->get();
         if ($jugadores) {
             return response()->json(['jugadores' => $jugadores], 200);
         }
@@ -49,7 +56,7 @@ class jugadorController extends Controller
             'apellidos' => 'required|string',
             'dorsal' => 'required|integer',
             'altura' => 'required|numeric',
-            'posicion' => 'required|string',
+            'posicion_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -61,8 +68,14 @@ class jugadorController extends Controller
         $jugador->apellidos = $request->apellidos;
         $jugador->dorsal = $request->dorsal;
         $jugador->altura = $request->altura;
-        $jugador->posicion = $request->posicion;
+        $jugador->posicion_id = $request->posicion_id;
+        //Todo Hashear el cod_jugador para evitar que haya duplicados
         $jugador->codigo_jugador = Str::random(10);
+        $timestamp = Carbon::now()->timestamp;
+        $codigoJugador = $request->user()->equipo->id.$timestamp;
+        // Asigna el código único al jugador
+        $jugador->codigo_jugador = $codigoJugador;
+
         $jugador->equipo_id = $request->user()->equipo->id;
         $jugador->save();
         return response()->json(['message' => 'Jugador creado correctamente', 'info_jugador'=>$jugador], 200);
@@ -76,12 +89,13 @@ class jugadorController extends Controller
      */
     public function show(Request $request)
     {
-        $jugador = Jugador::find($request->id);
+        $jugador = Jugador::with('posicion')->find($request->id);
         $equipo = Equipo::find($jugador->equipo_id);
         if ($jugador) {
             return response()->json([
                 'nombre' => $jugador->nombre,
                 'apellidos' => $jugador->apellidos,
+                'poscion' =>$jugador->posicion->nombre,
                 'dorsal' => $jugador->dorsal,
                 'altura' => $jugador->altura,
                 'equipo' => $equipo->nombre,
@@ -122,7 +136,7 @@ class jugadorController extends Controller
         $jugador->apellidos = $request->apellidos;
         $jugador->dorsal = $request->dorsal;
         $jugador->altura = $request->altura;
-        $jugador->posicion = $request->posicion;
+        $jugador->posicion_id = $request->posicion_id;
         $jugador->save();
 
         return response()->json(['message' => 'Datos de jugador actualizados correctamente'], 200);
