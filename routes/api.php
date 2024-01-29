@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\equipoController;
 use App\Http\Controllers\Api\jugadorController;
 use App\Http\Controllers\Api\entrenamientoController;
 use App\Http\Controllers\Api\etiquetaController;
-
+use App\Http\Controllers\Api\sesionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -39,14 +39,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('update-perfil', [perfilController::class, 'update']);
     Route::get('get-perfil', [perfilController::class, 'get']);
 
+
+    //Controles comunes
+    Route::get('mi-equipo', [equipoController::class, 'show']);
     //Control de envios de mensajes
     Route::post('create-mensaje', [MensajeController::class, 'store']);
+    
 
     //Control de usuarios Jugadores
     Route::middleware('jugador.perfil')->group(function () {
-        Route::get('jugador-prueba', function () {
-            return response()->json(['message' => 'eres un jugador']);
-        });
+        Route::get('sesiones-semana',[sesionController::class,'getSesionSemanal']);
     });
 
     //Control de usuarios Entrenadores
@@ -58,7 +60,6 @@ Route::middleware('auth:sanctum')->group(function () {
         //Control de Equipos
         Route::get('equipos', [equipoController::class, 'index']);
         Route::get('equipos-defaults', [equipoController::class, 'getDefaults']);
-        Route::get('mi-equipo', [equipoController::class, 'show']);
         Route::post('create-equipo', [equipoController::class, 'store']);
         Route::post('set-entrenador-equipo', [equipoController::class, 'setUserEquipo']);
 
@@ -81,7 +82,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('etiquetas', [etiquetaController::class, 'index']);
         Route::get('etiquetas-defaults', [etiquetaController::class,'getEtiquetasDefaults']);
         Route::get('etiquetas-user', [etiquetaController::class, 'getetiquetasUser']);
-        Route::get('create-etiqueta', [etiquetaController::class, 'store']);
+        Route::post('create-etiqueta', [etiquetaController::class, 'store']);
 
+        //Control de SesionesEntrenamietos
+        Route::post('create-sesion', [sesionController::class, 'store']);
+        Route::post('update-sesion', [sesionController::class, 'update']);
+        Route::get('sesiones', [sesionController::class, 'index']);
+        Route::get('sesion', [sesionController::class, 'show']);
+        Route::get('sesion-filtro', [sesionController::class, 'sesionFiltro']);
     });
 });

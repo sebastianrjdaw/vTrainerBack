@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\Models\Equipo;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class equipoController extends Controller
 {
@@ -27,7 +25,8 @@ class equipoController extends Controller
 
     public function getDefaults()
     {
-        $equipos = Equipo::where('user_id', null)->get();
+        $equipos = Equipo::defaults()->get();
+
         return response()->json(['equiposDefaults' => $equipos]);
     }
 
@@ -50,7 +49,6 @@ class equipoController extends Controller
         $equipo->competicion = $request->competicion;
         $equipo->user_id = $request->user()->id;
         $equipo->save();
-        // $usuario=User::find($equipo->entrenador_id);
 
         return response()->json(['message' => 'Equipo Creado correctamente', 200]);
     }
@@ -71,31 +69,32 @@ class equipoController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Devolver el equipo del jugador o del entrenador.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
-        $usuario = User::find(Auth::id());
+        $usuario = $request->user();
+
+        // Intenta obtener el equipo directamente asociado al usuario (caso de los entrenadores)
         $equipo = $usuario->equipo;
-        if ($equipo) {
-            return response()->json(['equipo' => $equipo]);
+
+        // Si no se encuentra un equipo directamente, busca a través del perfil de jugador
+        if (!$equipo) {
+            $jugador = $usuario->jugador;
+            if ($jugador) {
+                $equipo = $jugador->equipo;
+            }
         }
 
-        return response()->json(['message' => 'No hay un equipo asociado']);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        // Verifica si se encontró un equipo, ya sea directamente o a través del perfil de jugador
+        if ($equipo) {
+            return response()->json(['equipo' => $equipo]);
+        } else {
+            return response()->json(['message' => 'No hay un equipo asociado al usuario.'], 404);
+        }
     }
 
     /**
@@ -105,9 +104,19 @@ class equipoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|min:3|max:30',
+            'ubicacion' => 'required|string|min:3|max:40',
+        ]);
+
+        $equipo = Equipo::find($request->id);
+        $equipo->nombre = $request->nombre;
+        $equipo->ubicacion = $request->ubicacion;
+        $equipo->save();
+
+        return response()->json(['message' => 'Informacion del Equipo actualizada correctamente']);
     }
 
     /**
@@ -116,8 +125,22 @@ class equipoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $equipo = Equipo::find($request->id);
+
+        // Verifica si el equipo es por defecto
+        if ($equipo && $equipo->user_id === null) {
+            return response()->json(['message' => 'No se puede eliminar un equipo por defecto.'], 403);
+        }
+
+        // Si no es un equipo por defecto, procede a eliminarlo
+        if ($equipo) {
+            $equipo->delete();
+            return response()->json(['message' => 'Equipo eliminado correctamente']);
+        }
+
+        // Si el equipo no existe
+        return response()->json(['message' => 'Equipo no encontrado.'], 404);
     }
 }

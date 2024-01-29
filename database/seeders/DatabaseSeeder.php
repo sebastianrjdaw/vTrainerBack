@@ -14,18 +14,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            adminSeeder::class,
-            usuarioSeeder::class,
-            pepeSeeder::class,
-            etiquetasSeeder::class,
+            AdminSeeder::class,
+            UsuarioSeeder::class,
+            EtiquetasSeeder::class,
             EntrenamientosSeeder::class,
-            etiquetasEntrenamientoSeeder::class,
-            perfilPepe::class,
+            EtiquetasEntrenamientoSeeder::class,
             EquiposSeeder::class,
-            //equipoPepe::class,
-            //jugadoresPepe::class,
-            //jornadaPepe::class,
-            //statsJugadoresPepe::class,
+            PosicionesSeeder::class
         ]);
 
          \App\Models\User::factory(10)->create();

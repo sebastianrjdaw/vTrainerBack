@@ -24,6 +24,8 @@ class CreateJugadorEstadisticasTable extends Migration
             $table->float('bloqueo');
             $table->float('colocacion');
             $table->float('saque');
+            $table->foreign('jornada_id')->references('id')->on('jornadas')->onDelete('cascade');
+            $table->foreign('jugador_id')->references('id')->on('jugadors')->onDelete('cascade');
         });
     }
 

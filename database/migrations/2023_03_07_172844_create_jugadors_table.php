@@ -20,15 +20,14 @@ class CreateJugadorsTable extends Migration
             $table->string('apellidos');
             $table->integer('dorsal');
             $table->float('altura');
-            $table->string('posicion');
+            $table->unsignedBigInteger('posicion_id');
             $table->string('codigo_jugador')->unique();
             $table->boolean('activo')->default(false);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('equipo_id');
             $table->foreign('equipo_id')->references('id')->on('equipos');
             $table->foreign('user_id')->references('id')->on('users');
-
-
+            $table->foreign('posicion_id')->references('id')->on('posicions');
         });
     }
 

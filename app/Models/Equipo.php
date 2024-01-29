@@ -15,6 +15,9 @@ class Equipo extends Model
 {
     use HasFactory;
 
+    public function scopeDefaults($query){
+        return $query->where('user_id', null);
+    }
     public function user(){
         return $this->belongsTo(User::class);
     }

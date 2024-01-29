@@ -22,7 +22,7 @@ class CreateJornadasTable extends Migration
             $table->string('rival');
             $table->integer('resultadoE');
             $table->integer('resultadoR');
-
+            $table->foreign('equipo_id')->references('id')->on('equipos');
         });
     }
 
