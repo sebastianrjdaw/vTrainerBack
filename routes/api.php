@@ -44,11 +44,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('mi-equipo', [equipoController::class, 'show']);
     //Control de envios de mensajes
     Route::post('create-mensaje', [MensajeController::class, 'store']);
-    
+
 
     //Control de usuarios Jugadores
     Route::middleware('jugador.perfil')->group(function () {
-        Route::get('sesiones-semana',[sesionController::class,'getSesionSemanal']);
+        Route::get('sesiones-semana', [sesionController::class, 'getSesionSemanal']);
     });
 
     //Control de usuarios Entrenadores
@@ -61,6 +61,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('equipos', [equipoController::class, 'index']);
         Route::get('equipos-defaults', [equipoController::class, 'getDefaults']);
         Route::post('create-equipo', [equipoController::class, 'store']);
+        Route::post('update-equipo', [equipoController::class, 'update']);
         Route::post('set-entrenador-equipo', [equipoController::class, 'setUserEquipo']);
 
         //Control de Jugadores
@@ -72,15 +73,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
         //Control de Entrenamientos
         Route::get('entrenamientos', [entrenamientoController::class, 'index']);
-        Route::get('entrenamientos-defaults', [entrenamientoController::class,'getEntrenamientosDefaults']);
+        Route::get('entrenamientos-defaults', [entrenamientoController::class, 'getEntrenamientosDefaults']);
         Route::get('entrenamientos-user', [entrenamientoController::class, 'getEntrenamientosUser']);
-        Route::post('create-entrenamiento',[entrenamientoController::class, 'store']);
-        Route::post('update-entrenamiento',[entrenamientoController::class, 'update']);
+        Route::post('create-entrenamiento', [entrenamientoController::class, 'store']);
+        Route::post('update-entrenamiento', [entrenamientoController::class, 'update']);
 
 
         //Control de Etiquetas
         Route::get('etiquetas', [etiquetaController::class, 'index']);
-        Route::get('etiquetas-defaults', [etiquetaController::class,'getEtiquetasDefaults']);
+        Route::get('etiquetas-defaults', [etiquetaController::class, 'getEtiquetasDefaults']);
         Route::get('etiquetas-user', [etiquetaController::class, 'getetiquetasUser']);
         Route::post('create-etiqueta', [etiquetaController::class, 'store']);
 

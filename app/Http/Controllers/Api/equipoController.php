@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Models\Equipo;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -109,11 +110,13 @@ class equipoController extends Controller
         $request->validate([
             'nombre' => 'required|string|min:3|max:30',
             'ubicacion' => 'required|string|min:3|max:40',
+            'competicion' => 'required|string'
         ]);
 
-        $equipo = Equipo::find($request->id);
+        $equipo = Equipo::find($request->user()->equipo->id);
         $equipo->nombre = $request->nombre;
         $equipo->ubicacion = $request->ubicacion;
+        $equipo->competicion = $request->competicion;
         $equipo->save();
 
         return response()->json(['message' => 'Informacion del Equipo actualizada correctamente']);
