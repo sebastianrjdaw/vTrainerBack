@@ -68,6 +68,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('jugadores', [jugadorController::class, 'index']);
         Route::get('jugador', [jugadorController::class, 'show']);
         Route::get('jugadores-equipo', [jugadorController::class, 'getJugadoresEquipo']);
+        Route::get('posiciones', [jugadorController::class, 'getPosiciones']);
         Route::post('create-jugador', [jugadorController::class, 'store']);
         Route::post('update-jugador', [jugadorController::class, 'update']);
 

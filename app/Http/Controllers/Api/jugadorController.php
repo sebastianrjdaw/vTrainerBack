@@ -24,9 +24,10 @@ class jugadorController extends Controller
         return response()->json(['jugadores' => $jugadores], 200);
     }
 
-    public function getPosiciones(){
+    public function getPosiciones()
+    {
         $posiciones = Posicion::all();
-        return response()->json(['posiciones'=>$posiciones]);
+        return response()->json(['posiciones' => $posiciones]);
     }
 
     /**
@@ -72,13 +73,13 @@ class jugadorController extends Controller
         //Todo Hashear el cod_jugador para evitar que haya duplicados
         $jugador->codigo_jugador = Str::random(10);
         $timestamp = Carbon::now()->timestamp;
-        $codigoJugador = $request->user()->equipo->id.$timestamp;
+        $codigoJugador = $request->user()->equipo->id . $timestamp;
         // Asigna el código único al jugador
         $jugador->codigo_jugador = $codigoJugador;
 
         $jugador->equipo_id = $request->user()->equipo->id;
         $jugador->save();
-        return response()->json(['message' => 'Jugador creado correctamente', 'info_jugador'=>$jugador], 200);
+        return response()->json([$jugador], 200);
     }
 
     /**
@@ -95,7 +96,7 @@ class jugadorController extends Controller
             return response()->json([
                 'nombre' => $jugador->nombre,
                 'apellidos' => $jugador->apellidos,
-                'poscion' =>$jugador->posicion->nombre,
+                'poscion' => $jugador->posicion->nombre,
                 'dorsal' => $jugador->dorsal,
                 'altura' => $jugador->altura,
                 'equipo' => $equipo->nombre,
@@ -118,7 +119,7 @@ class jugadorController extends Controller
             'apellidos' => 'required|string',
             'dorsal' => 'required|integer',
             'altura' => 'required|numeric',
-            'posicion' => 'required|string',
+            'posicion_id' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {

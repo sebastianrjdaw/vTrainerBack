@@ -41,7 +41,7 @@ class equipoController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|min:3|max:30',
-            'ubicacion' => 'required|string|min:3|max:40',
+            'ubicacion' => 'required|string|min:2|max:40',
             'competicion' => 'required|string',
         ]);
         $equipo = new Equipo();
@@ -109,7 +109,7 @@ class equipoController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|min:3|max:30',
-            'ubicacion' => 'required|string|min:3|max:40',
+            'ubicacion' => 'required|string|min:2|max:40',
             'competicion' => 'required|string'
         ]);
 
