@@ -52,7 +52,7 @@ class entrenamientoController extends Controller
         $user = $request->user();
         $entrenamientos = Entrenamiento::where('user_id', $user->id)->get();
 
-        
+
         $entrenamientosTransformados = $entrenamientos->map(function ($entrenamiento) {
             // Extraer solo los campos necesarios de las etiquetas
             $etiquetasTransformadas = $entrenamiento->etiquetas->map(function ($etiqueta) {
@@ -87,27 +87,27 @@ class entrenamientoController extends Controller
             'cuerpo' => 'required|string',
             'etiquetas' => 'array',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-    
+
         $entrenamiento = new Entrenamiento();
         $entrenamiento->titulo = $request->titulo;
         $entrenamiento->cuerpo = $request->cuerpo;
         $entrenamiento->user_id = $request->user()->id;
-        
+
         // Primero, guarda el Entrenamiento
         $entrenamiento->save();
-    
+
         // Después de guardar, el Entrenamiento tiene un ID asignado y puedes adjuntar las etiquetas
         foreach ($request->etiquetas as $etiqueta) {
             $entrenamiento->etiquetas()->attach($etiqueta);
         }
-    
+
         return response()->json(['message' => 'Entrenamiento creado correctamente'], 200);
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -134,7 +134,7 @@ class entrenamientoController extends Controller
         $validator = Validator::make($request->all(), [
             'titulo' => 'required|string',
             'cuerpo' => 'required|string',
-            'etiquetas' => 'array', 
+            'etiquetas' => 'array',
         ]);
 
         if ($validator->fails()) {
@@ -142,12 +142,12 @@ class entrenamientoController extends Controller
         }
 
         $entrenamiento = Entrenamiento::find($request->id);
-        
+
         if (!$entrenamiento) {
             return response()->json(['message' => 'Entrenamiento no encontrado'], 404);
         }
 
-        if($entrenamiento->user_id == null){
+        if ($entrenamiento->user_id == null) {
             return response()->json(['message' => 'Entrenamiento no es editable'], 404);
         }
 
@@ -169,9 +169,9 @@ class entrenamientoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $entrenamiento = Entrenamiento::find($id);
+        $entrenamiento = Entrenamiento::find($request->id);
         $entrenamiento->etiquetas()->detach();
         $entrenamiento->delete();
 

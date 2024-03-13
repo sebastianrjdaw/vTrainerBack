@@ -153,6 +153,10 @@ class jugadorController extends Controller
     {
         $jugador = Jugador::find($request->id);
         if ($jugador) {
+            if ($jugador->activo) {
+                return response()->json(['message' => 'No se puede eliminar un jugador activo'], 404);
+            }
+            $jugador->delete();
             return response()->json(['message' => 'El jugador ' . $jugador->nombre . ' se elimino correctamente'], 200);
         }
         return response()->json(['message' => 'No se encontro el jugador'], 404);

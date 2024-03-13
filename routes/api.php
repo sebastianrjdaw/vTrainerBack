@@ -71,6 +71,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('posiciones', [jugadorController::class, 'getPosiciones']);
         Route::post('create-jugador', [jugadorController::class, 'store']);
         Route::post('update-jugador', [jugadorController::class, 'update']);
+        Route::post('delete-jugador', [jugadorController::class, 'destroy']);
+
 
         //Control de Entrenamientos
         Route::get('entrenamientos', [entrenamientoController::class, 'index']);
@@ -78,6 +80,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('entrenamientos-user', [entrenamientoController::class, 'getEntrenamientosUser']);
         Route::post('create-entrenamiento', [entrenamientoController::class, 'store']);
         Route::post('update-entrenamiento', [entrenamientoController::class, 'update']);
+        Route::post('delete-entrenamiento', [entrenamientoController::class, 'destroy']);
+
 
 
         //Control de Etiquetas
