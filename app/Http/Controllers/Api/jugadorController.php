@@ -83,6 +83,7 @@ class jugadorController extends Controller
     }
 
     /**
+     *
      * Display the specified resource.
      *
      * @param  int  $id

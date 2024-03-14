@@ -205,12 +205,22 @@ class sesionController extends Controller
     public function getUserSesions(Request $request)
     {
         try {
-            // Asumimos que el usuario está asociado a un equipo.
-            $equipo_id = $request->user()->equipo->id; // Asegúrate de que el usuario tiene un 'equipo_id' relacionado.
+            $user = $request->user(); // Obtener el usuario autenticado
+            $perfil = $user->perfil->tipoUsuario; // Obtener el tipo de usuario
+
+            // Determinar el equipo_id basado en el tipo de usuario
+            if ($perfil == 'entrenador') {
+                $equipo_id = $user->equipo->id;
+            } elseif ($perfil == 'jugador') {
+                $equipo_id = $user->jugador->equipo->id;
+            } else {
+                // Manejar casos donde el perfil no es ni entrenador ni jugador
+                return response()->json(['message' => 'El usuario no tiene un rol válido asociado a un equipo.'], 400);
+            }
 
             // Buscar las sesiones que pertenecen al equipo del usuario.
             $sesiones = Sesion::where('equipo_id', $equipo_id)
-                ->with(['entrenamientos']) // Carga los entrenamientos relacionados.
+                ->with(['entrenamientos']) // Cargar los entrenamientos relacionados.
                 ->get();
 
             // Si no hay sesiones, devolver un mensaje indicándolo.
@@ -225,6 +235,7 @@ class sesionController extends Controller
             return response()->json(['message' => 'Error al obtener las sesiones.', 'error' => $e->getMessage()], 500);
         }
     }
+
 
     /**
      * Remove the specified resource from storage.

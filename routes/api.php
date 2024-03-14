@@ -42,6 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //Controles comunes
     Route::get('mi-equipo', [equipoController::class, 'show']);
+    Route::get('sesiones-user', [sesionController::class, 'getUserSesions']);
     //Control de envios de mensajes
     Route::post('create-mensaje', [MensajeController::class, 'store']);
 
@@ -95,7 +96,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('update-sesion', [sesionController::class, 'update']);
         Route::get('sesiones', [sesionController::class, 'index']);
         Route::get('sesion', [sesionController::class, 'show']);
-        Route::get('sesiones-user', [sesionController::class, 'getUserSesions']);
+
         Route::get('sesion-filtro', [sesionController::class, 'sesionFiltro']);
     });
 });
