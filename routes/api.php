@@ -95,6 +95,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('update-sesion', [sesionController::class, 'update']);
         Route::get('sesiones', [sesionController::class, 'index']);
         Route::get('sesion', [sesionController::class, 'show']);
+        Route::get('sesiones-user', [sesionController::class, 'getUserSesions']);
         Route::get('sesion-filtro', [sesionController::class, 'sesionFiltro']);
     });
 });
