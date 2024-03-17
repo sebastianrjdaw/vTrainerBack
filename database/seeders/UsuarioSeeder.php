@@ -16,15 +16,28 @@ class UsuarioSeeder extends Seeder
 
     public function run()
     {
-        $datos = ['jugador','entrenador'];
-        foreach ($datos as $dato){
+        $datos = ['jugador', 'entrenador'];
+        foreach ($datos as $dato) {
             DB::table('users')->insert([
 
                 'name' => $dato,
-                'email' => $dato.'@'.$dato.'.com',
+                'email' => $dato . '@' . $dato . '.com',
                 'rol' => 'usuario',
                 'password' => Hash::make($dato)
             ]);
+            if ($dato == 'entrenador') {
+                DB::table('perfils')->insert([
+                    'user_id' => 3,
+                    'esPremium' => 0,
+                    'tipoUsuario' => 'entrenador'
+                ]);
+                DB::table('equipos')->insert([
+                    'user_id' => 3,
+                    'nombre' => 'Heinsenberg Team',
+                    'competicion' => 'SM1',
+                    'ubicacion' => 'ES'
+                ]);
+            }
         }
     }
 }

@@ -50,6 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //Control de usuarios Jugadores
     Route::middleware('jugador.perfil')->group(function () {
         Route::get('sesiones-semana', [sesionController::class, 'getSesionSemanal']);
+        Route::get('user-jugador', [jugadorController::class, 'show']);
     });
 
     //Control de usuarios Entrenadores

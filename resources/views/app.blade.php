@@ -71,7 +71,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         {{-- <a class="collapse-item" href="/todosPerfiles">Usuarios</a> --}}
                         <a class="collapse-item" href="{{ route('users.index') }}">Usuarios</a>
-                        <a class="collapse-item" href="{{route('mensajes.index')}}">Mensajes</a>
+                        <a class="collapse-item" href="{{ route('mensajes.index') }}">Mensajes</a>
                     </div>
                 </div>
             </li>
@@ -84,7 +84,6 @@
                 <div id="collapseLogs" class="collapse" aria-labelledby="headingLogs" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/user-logs">Logs Usuarios</a>
-                        <a class="collapse-item" href="/todosPerfiles">BD logs</a>
                     </div>
                 </div>
             </li>
@@ -114,7 +113,8 @@
                     <ul class="navbar-nav ml-auto">
 
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link " href="{{route('mensajes.index')}}" id="messagesDropdown" role="button">
+                            <a class="nav-link " href="{{ route('mensajes.index') }}" id="messagesDropdown"
+                                role="button">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Contador de Mensajes No Leídos -->
                                 @if (isset($cantidadMensajesNoLeidos) && $cantidadMensajesNoLeidos > 0)

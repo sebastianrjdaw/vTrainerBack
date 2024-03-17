@@ -91,19 +91,26 @@ class jugadorController extends Controller
      */
     public function show(Request $request)
     {
-        $jugador = Jugador::with('posicion')->find($request->id);
-        $equipo = Equipo::find($jugador->equipo_id);
+        if ($request->id) {
+            $jugador = Jugador::with('posicion')->find($request->id);
+            $equipo = Equipo::find($jugador->equipo_id);
+        } else {
+            $jugador = Jugador::with('posicion')->find($request->user()->jugador->id);
+            $equipoId = $request->user()->jugador->equipo->id;
+            $equipo = Equipo::find($equipoId);
+        }
+
         if ($jugador) {
             return response()->json([
                 'nombre' => $jugador->nombre,
                 'apellidos' => $jugador->apellidos,
-                'poscion' => $jugador->posicion->nombre,
+                'posicion' => $jugador->posicion->nombre,
                 'dorsal' => $jugador->dorsal,
                 'altura' => $jugador->altura,
-                'equipo' => $equipo->nombre,
+                'equipo' => $equipo,
             ]);
         }
-        return response()->json(['message' => 'Jugador no encontrado'], 404);
+        return response()->json(['message' => 'Jugador no encontrado', 'id_entrada' => $request->user()->id], 404);
     }
 
     /**
