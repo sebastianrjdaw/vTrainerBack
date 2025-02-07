@@ -10,11 +10,13 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Perfil;
 use App\Models\Equipo;
 use App\Models\Jugador;
+use Spatie\Permission\Traits\HasRoles;
 
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    
 
 
     public function isAdmin()
@@ -52,11 +54,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // funcion para indicar que el usuario posee un Perfil
-    public function perfil()
-    {
-        return $this->hasOne(Perfil::class);
-    }
     public function equipo()
     {
         return $this->hasOne(Equipo::class);

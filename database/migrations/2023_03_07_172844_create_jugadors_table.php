@@ -13,7 +13,7 @@ class CreateJugadorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('jugadors', function (Blueprint $table) {
+        Schema::create('jugadores', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('nombre');
@@ -27,7 +27,7 @@ class CreateJugadorsTable extends Migration
             $table->unsignedBigInteger('equipo_id');
             $table->foreign('equipo_id')->references('id')->on('equipos');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('posicion_id')->references('id')->on('posicions');
+            $table->foreign('posicion_id')->references('id')->on('posiciones');
         });
     }
 

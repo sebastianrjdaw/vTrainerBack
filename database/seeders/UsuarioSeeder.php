@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,28 +17,19 @@ class UsuarioSeeder extends Seeder
 
     public function run()
     {
-        $datos = ['jugador', 'entrenador'];
-        foreach ($datos as $dato) {
-            DB::table('users')->insert([
+        $user = User::create([
+            'name' => 'entrenador_test',
+            'email' => 'entrenador_test@admin.com',
+            'password' => Hash::make('admin')
+        ]);
+        $user->assignRole('entrenador');
 
-                'name' => $dato,
-                'email' => $dato . '@' . $dato . '.com',
-                'rol' => 'usuario',
-                'password' => Hash::make($dato)
-            ]);
-            if ($dato == 'entrenador') {
-                DB::table('perfils')->insert([
-                    'user_id' => 3,
-                    'esPremium' => 0,
-                    'tipoUsuario' => 'entrenador'
-                ]);
-                DB::table('equipos')->insert([
-                    'user_id' => 3,
-                    'nombre' => 'Heinsenberg Team',
-                    'competicion' => 'SM1',
-                    'ubicacion' => 'ES'
-                ]);
-            }
-        }
+        $user = User::create([
+            'name' => 'jugador_test',
+            'email' => 'jugador_test@admin.com',
+            'password' => Hash::make('admin')
+        ]);
+        $user->assignRole('jugador');
+       
     }
 }
