@@ -27,7 +27,7 @@ Route::get('/', function () {
     return view('invitado');
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::group(['middleware' => ['role:admin']], function () { 
     Route::get('/dashboard', function () {
         $cantidadMensajesNoLeidos = Mensaje::where('estado', 0)->count();
         return view('admin.adminIndex', ['cantidadMensajesNoLeidos' => $cantidadMensajesNoLeidos]);
